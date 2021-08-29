@@ -47,16 +47,29 @@ const Owner = mongoose.model("Owner", {
 // GTA.save();
 // WD.save();
 // console.log('Successfully Added');
-const FF = new Game({
-  name: "Free Fire",os:"Android or iOS"
-});
-const PUBG = new Game({
-  name:"Player Unknown's Battle Ground",os:"Android or iOS or Windows" ,cds:2
-});
+// const FF = new Game({
+//   name: "Free Fire",os:"Android or iOS"
+// });
+// const PUBG = new Game({
+//   name:"Player Unknown's Battle Ground",os:"Android or iOS or Windows" ,cds:2
+// });
 
-Game.insertMany([FF , PUBG ],function(err){
+// Game.insertMany([FF , PUBG ],function(err){
+//   if(err){
+//     console.log('Failed');
+//   }else{
+//     console.log('Added');
+//   };
+// });
+
+const bulkGames =[
+  {name:"Vice City",os:"98+",cds:1},{name:"Death Note",os:"11+",cds:14}
+];
+
+Game.insertMany(bulkGames,function(err){
   if(err){
     console.log('Failed');
+
   }else{
     console.log('Added');
   };
