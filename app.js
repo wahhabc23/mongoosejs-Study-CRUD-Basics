@@ -4,7 +4,10 @@ const mongoose = require('mongoose');
 mongoose.connect("mongodb://localhost:27017/gamesDB",{ useNewUrlParser: true ,useUnifiedTopology: true});
 
 const Game = mongoose.model('Game', {
-  name: String,
+  name: {
+    type:String,
+    required:[true,"Name important"]
+  },
   os: String,
   cds: Number
 });
@@ -76,17 +79,26 @@ const Owner = mongoose.model("Owner", {
 //   };
 // });
 
-Game.find(function(err , docs)
-{
-  if(err)
-  {
-    console.log(err);
-  }
-  else
-  {
-    mongoose.connection.close();
-    docs.forEach(function(doc){
-      console.log(doc.name);
-    });
+
+Game.updateOne({_id:"612c535fc6399f49d34613c1"},{ name : "GTA VI" } ,function(err){
+  if(err){
+    console.log('Failed');
+  }else{
+    console.log('Updated');
   };
 });
+
+// Game.find(function(err , docs)
+// {
+//   if(err)
+//   {
+//     console.log(err);
+//   }
+//   else
+//   {
+    // mongoose.connection.close();
+//     docs.forEach(function(doc){
+//       console.log(doc.name);
+//     });
+//   };
+// });
