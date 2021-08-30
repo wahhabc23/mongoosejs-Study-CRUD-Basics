@@ -84,8 +84,9 @@ Game.find(function(err , docs)
   }
   else
   {
+    mongoose.connection.close();
     docs.forEach(function(doc){
       console.log(doc.name);
-    })
+    });
   };
 });
