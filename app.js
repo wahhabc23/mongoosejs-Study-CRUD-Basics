@@ -3,19 +3,40 @@ const mongoose = require('mongoose');
 
 mongoose.connect("mongodb://localhost:27017/gamesDB",{ useNewUrlParser: true ,useUnifiedTopology: true});
 
-const Game = mongoose.model('Game', {
-  name: {
-    type:String,
-    required:[true,"Name important"]
-  },
-  os: String,
-  cds: Number
+const gameSchema = new mongoose.Schema({
+    name: {
+      type:String,
+      required:[true,"Name important"]
+    },
+    os: String,
+    cds: Number
+  });
+
+const Game = mongoose.model('Game', gameSchema);
+
+const ownerSchema = new mongoose.Schema({
+  name: String,
+  ph: Number,
+  favGame: gameSchema
 });
 
-const Owner = mongoose.model("Owner", {
-  name: String,
-  ph: Number
-});
+const Owner = mongoose.model("Owner", ownerSchema);
+
+// const angrybird = new Game({
+//   name:"Angry Birds",
+//   os: "95+",
+//   cds: 1
+// });
+//
+// angrybird.save();
+//
+// const John = new Owner({
+//   name:"John",
+//   ph: 9874563214,
+//   favGame: angrybird
+// });
+//
+// John.save();
 
 // const game = new Game({
 //   name: "GTA V",
@@ -29,11 +50,11 @@ const Owner = mongoose.model("Owner", {
 // });
 //
 //
-// const farcry = new Game({
-//   name: "Farcry",
-//   os: "XP and above",
-//   cds: 2
-// });
+const farcry = new Game({
+  name: "Farcry",
+  os: "XP and above",
+  cds: 2
+});
 //
 // const GTA = new Owner({
 //   name: "Wahhab",
@@ -45,12 +66,18 @@ const Owner = mongoose.model("Owner", {
 //   ph: 9874125630
 // });
 //
+
+//Save item to DataBase
+
 // game.save();
 // game2.save();
 // farcry.save();
 // GTA.save();
 // WD.save();
 // console.log('Successfully Added');
+
+//InsertMany items Manually
+
 // const FF = new Game({
 //   name: "Free Fire",os:"Android or iOS"
 // });
@@ -66,6 +93,8 @@ const Owner = mongoose.model("Owner", {
 //   };
 // });
 
+//Direct insert array
+
 // const bulkGames =[
 //   {name:"Vice City",os:"98+",cds:1},{name:"Death Note",os:"11+",cds:14}
 // ];
@@ -79,16 +108,29 @@ const Owner = mongoose.model("Owner", {
 //   };
 // });
 
+//UpdateOne item in Database
 
-Game.updateOne({_id:"612c535fc6399f49d34613c1"},{ name : "GTA VI" } ,function(err){
-  if(err){
-    console.log('Failed');
-  }else{
-    console.log('Updated');
-  };
-});
+// Game.updateOne({_id:"612c535fc6399f49d34613c1"},{ name : "GTA VI" } ,function(err){
+//   if(err){
+//     console.log('Failed');
+//   }else{
+//     console.log('Updated');
+//   };
+// });
 
-// Game.find(function(err , docs)
+//DeleteOne item in DataBase
+
+// Game.deleteOne({name: "GTA VI"},function(err){
+//   if (err) {
+//     console.log('Failed');
+//   } else {
+//     console.log('Deleted');
+//   };
+// });
+
+//Select or Find item specifically in DataBase Collection(games)
+
+// Game.find(function(err , games)
 // {
 //   if(err)
 //   {
@@ -96,9 +138,36 @@ Game.updateOne({_id:"612c535fc6399f49d34613c1"},{ name : "GTA VI" } ,function(er
 //   }
 //   else
 //   {
-    // mongoose.connection.close();
-//     docs.forEach(function(doc){
-//       console.log(doc.name);
+//     mongoose.connection.close();
+//     games.forEach(function(game){
+//       console.log(game.name);
 //     });
 //   };
 // });
+
+// Owner.updateOne({name:"Wahhab"},{favGame:farcry},function(err){
+//   if (err) {
+//     console.log(err);
+//   } else {
+//     console.log('Success');
+//   };
+// });
+
+//Select or Find Full Data in Collection(games)
+
+Game.find(function(err,games){
+  if (err) {
+    console.log(err);
+  } else {
+    console.log(games);
+  };
+});
+
+Owner.find(function(err,owners){
+  if (err) {
+    console.log(err);
+  } else {
+    mongoose.connection.close();
+    console.log(owners);
+  };
+});
