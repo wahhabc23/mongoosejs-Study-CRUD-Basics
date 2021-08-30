@@ -1,4 +1,4 @@
-// mongoose v5.13.8 needed v6 not working 
+// mongoose v5.13.8 needed v6 not working
 const mongoose = require('mongoose');
 
 mongoose.connect("mongodb://localhost:27017/gamesDB",{ useNewUrlParser: true ,useUnifiedTopology: true});
@@ -76,10 +76,16 @@ const Owner = mongoose.model("Owner", {
 //   };
 // });
 
-Game.find(function(err , docs ){
-  if(err){
+Game.find(function(err , docs)
+{
+  if(err)
+  {
     console.log(err);
-  }else{
-    console.log(docs);
+  }
+  else
+  {
+    docs.forEach(function(doc){
+      console.log(doc.name);
+    })
   };
 });
