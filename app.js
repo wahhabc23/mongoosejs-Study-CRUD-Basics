@@ -1,6 +1,7 @@
+// mongoose v5.13.8 needed v6 not working 
 const mongoose = require('mongoose');
 
-mongoose.connect("mongodb://localhost:27017/gamesDB");
+mongoose.connect("mongodb://localhost:27017/gamesDB",{ useNewUrlParser: true ,useUnifiedTopology: true});
 
 const Game = mongoose.model('Game', {
   name: String,
@@ -62,15 +63,23 @@ const Owner = mongoose.model("Owner", {
 //   };
 // });
 
-const bulkGames =[
-  {name:"Vice City",os:"98+",cds:1},{name:"Death Note",os:"11+",cds:14}
-];
+// const bulkGames =[
+//   {name:"Vice City",os:"98+",cds:1},{name:"Death Note",os:"11+",cds:14}
+// ];
+//
+// Game.insertMany(bulkGames,function(err){
+//   if(err){
+//     console.log('Failed');
+//
+//   }else{
+//     console.log('Added');
+//   };
+// });
 
-Game.insertMany(bulkGames,function(err){
+Game.find(function(err , docs ){
   if(err){
-    console.log('Failed');
-
+    console.log(err);
   }else{
-    console.log('Added');
+    console.log(docs);
   };
 });
